@@ -11,10 +11,12 @@ void transpose(int a[][3], int c)
         a[i][1] = temp;
     }
 }
+
 int main()
 {
     int n, m, c;
     cout << "Enter the First row of the sparse matrix: " << endl;
+
     cin >> n >> m >> c;
     int sp[c + 1][3];
     sp[0][0] = n;
