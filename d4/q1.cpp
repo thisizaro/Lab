@@ -7,26 +7,35 @@ struct node
     struct node *nxt;
 };
 
-void insertPos(node *head, int pos, int val)
+struct node *getnode(int val)
 {
     struct node *temp = new node;
     temp->val = val;
     temp->nxt = NULL;
+    return temp;
+}
 
+void insertPos(node *head, int pos, int val)
+{
+    struct node *temp = head;
+    struct node *newNode = getnode(val);
     if (pos == 1)
     {
-        temp->nxt = head;
-        head = temp;
+        newNode->nxt = head;
+        head = newNode;
         return;
     }
-
-    struct node *temp1 = head;
-    for (int i = 0; i < pos - 2; i++)
+    while (temp->nxt != NULL && --pos)
     {
-        temp1 = temp1->nxt;
+        temp = temp->nxt;
+        if (pos == 0)
+        {
+            newNode->nxt = temp->nxt;
+            temp->nxt = newNode;
+            return;
+        }
     }
-    temp->nxt = temp1->nxt;
-    temp1->nxt = temp;
+    cout << "Invalid position\n";
 }
 
 void delPos() {}
@@ -53,7 +62,10 @@ void rev() {}
 int main()
 {
     int ch;
-    struct node *head = NULL;
+    struct node *head = getnode(1);
+    head->nxt = getnode(2);
+    head->nxt->nxt = getnode(3);
+    head->nxt->nxt->nxt = getnode(4);
     while (1)
     {
         cout << "1. Insert at position" << endl
