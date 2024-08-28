@@ -38,8 +38,44 @@ void insertPos(node *head, int pos, int val)
     cout << "Invalid position\n";
 }
 
-void delPos() {}
-void count() {}
+void delPos(node *head, int pos)
+{
+    struct node *temp = head;
+    if (temp == NULL)
+    {
+        cout << "List is empty\n";
+        return;
+    }
+    if (pos == 1)
+    {
+        head = head->nxt;
+        free(temp);
+        return;
+    }
+    while (temp->nxt != NULL && --pos)
+    {
+        temp = temp->nxt;
+        if (pos == 0)
+        {
+            struct node *temp2 = temp->nxt;
+            temp->nxt = temp2->nxt;
+            free(temp2);
+            return;
+        }
+    }
+    cout << "Invalid position\n";
+}
+int count(node *head)
+{
+    int count = 0;
+    struct node *temp = head;
+    while (temp != NULL)
+    {
+        count++;
+        temp = temp->nxt;
+    }
+    return count;
+}
 
 void traverse(node *head)
 {
@@ -53,11 +89,53 @@ void traverse(node *head)
     cout << endl;
 }
 
-void search()
+int search(node *head, int k)
 {
+    struct node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->val == k)
+        {
+            return 1;
+        }
+        temp = temp->nxt;
+    }
+    return 0;
 }
-void sort() {}
-void rev() {}
+void sortLinkedList(node *head)
+{
+    struct node *temp = head;
+    while (temp != NULL)
+    {
+        struct node *temp2 = temp->nxt;
+        while (temp2 != NULL)
+        {
+            if (temp->val > temp2->val)
+            {
+                int t = temp->val;
+                temp->val = temp2->val;
+                temp2->val = t;
+            }
+            temp2 = temp2->nxt;
+        }
+        temp = temp->nxt;
+    }
+}
+
+void rev(node *head)
+{
+    struct node *prev = NULL;
+    struct node *curr = head;
+    struct node *nxt = NULL;
+    while (curr != NULL)
+    {
+        nxt = curr->nxt;
+        curr->nxt = prev;
+        prev = curr;
+        curr = nxt;
+    }
+    head = prev;
+}
 
 int main()
 {
@@ -89,22 +167,22 @@ int main()
             insertPos(head, pos, val);
             break;
         case 2:
-            delPos();
+            delPos(head, pos);
             break;
         case 3:
-            count();
+            count(head);
             break;
         case 4:
             traverse(head);
             break;
         case 5:
-            search();
+            search(head, val);
             break;
         case 6:
-            sort();
+            sortLinkedList(head);
             break;
         case 7:
-            rev();
+            rev(head);
             break;
         case 8:
             exit(0);
